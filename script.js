@@ -1,38 +1,95 @@
 let cases = document.querySelectorAll('[data-cell]')
 let tableau = document.getElementById('tableau')
 let joueur1 = 'x'
-let joueur2 = '0'
-let aquiletour = false
-let victoire = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [2, 4, 6],
-    [0, 4, 8]
-]
-let start = 0;
-
-startGame().addEventListener('click', startGame)
-
-function startGame() {
-    isPlayer_O_Turn = false
-
-    cases.forEach(cases => {
-        cases.classList.remove(joueur1),
-            cases.classList.remove(joueur2),
-            cases.removeEventListener('click', handleCellClick),
-            cases.addEventListener('click', handleCellClick, { once: true })
-    })
-    setBoardHoverClass()
-    winningMessageElement.classList.remove('show')
+let joueur2 = 'o'
+let state = {
+    encours: 1,
+    j1: 0,
+    j2: 0,
+    case1: 0,
+    case2: 0,
+    case3: 0,
+    case4: 0,
+    case5: 0,
+    case6: 0,
+    case7: 0,
+    case8: 0,
+    case9: 0,
 }
 
-function handleCellClick(event){
-    var cases = event.target
-    var tour = aquiletour? joueur1 : joueur2
-    placeMar
-
+let victory = () => {
+    if (
+        (state.case1 == state.case2 && state.case2 == state.case3 > 0)
+        (state.case1 == state.case4 && state.case4 == state.case7 > 0)
+        (state.case1 == state.case5 && state.case5 == state.case9 > 0)
+        (state.case2 == state.case5 && state.case5 == state.case8 > 0)
+        (state.case3 == state.case6 && state.case6 == state.case9 > 0)
+        (state.case4 == state.case5 && state.case5 == state.case6 > 0)
+        (state.case7 == state.case8 && state.case8 == state.case9 > 0)
+        (state.case3 == state.case5 && state.case5 == state.case7 > 0)
+    ) {
+        return true;
+    } else if (
+        state.case1 != 0 &&
+        state.case2 != 0 &&
+        state.case3 != 0 &&
+        state.case4 != 0 &&
+        state.case5 != 0 &&
+        state.case6 != 0 &&
+        state.case7 != 0 &&
+        state.case8 != 0 &&
+        state.case9 != 0
+    ) {
+        return ("Match nul")
+    } else {
+        return false
+    }
 }
+
+
+var cellule = (e) => {
+    var cases = e.target
+    console.log(cases)
+    if (state[cases] != 0)
+        return
+    state[cases] = state.encours
+
+    var win = victory();
+    if (win == true) {
+        alert('Vous avez gagné')
+        if (state.encours == 1) {
+            state.j1++
+        } else {
+            state.j2++
+        }
+        nouvellepartie()
+    } 
+}
+
+
+cases.forEach((e) => {
+    e.addEventListener('click', cellule);
+    e.innerHTML = e.textContent
+    console.log(e)
+})
+
+let nouvellepartie = () => {
+    encours = 1
+    state.case2 = 0
+    state.case1 = 0
+    state.case3 = 0
+    state.case4 = 0
+    state.case5 = 0
+    state.case6 = 0
+    state.case7 = 0
+    state.case8 = 0
+    state.case9 = 0
+}
+
+let joueur = ' '
+
+function tour(joueur){
+    (joueur % 2 == 0) ? joueur1 = 'x' : joueur2 = 'o'
+    return figure
+}
+console.log(joueur)
