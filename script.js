@@ -1,0 +1,1 @@
+let cases = document.querySelectorAll('.case')
