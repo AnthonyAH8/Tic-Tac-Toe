@@ -1,7 +1,6 @@
+let joueur = ' x '
 let cases = document.querySelectorAll('[data-cell]')
 let tableau = document.getElementById('tableau')
-let joueur1 = 'x'
-let joueur2 = 'o'
 let state = {
     encours: 1,
     j1: 0,
@@ -50,6 +49,8 @@ let victory = () => {
 var cellule = (e) => {
     var cases = e.target
     console.log(cases)
+    cases.innerHTML = joueur
+    tour()
     if (state[cases] != 0)
         return
     state[cases] = state.encours
@@ -69,14 +70,13 @@ var cellule = (e) => {
 
 cases.forEach((e) => {
     e.addEventListener('click', cellule);
-    e.innerHTML = e.textContent
     console.log(e)
 })
 
 let nouvellepartie = () => {
     encours = 1
-    state.case2 = 0
     state.case1 = 0
+    state.case2 = 0
     state.case3 = 0
     state.case4 = 0
     state.case5 = 0
@@ -86,10 +86,11 @@ let nouvellepartie = () => {
     state.case9 = 0
 }
 
-let joueur = ' '
 
 function tour(joueur){
-    (joueur % 2 == 0) ? joueur1 = 'x' : joueur2 = 'o'
-    return figure
+    if(joueur == 'x'){
+        joueur == 'o'
+    } else {
+        joueur = 'o'
+    }
 }
-console.log(joueur)
